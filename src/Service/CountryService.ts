@@ -11,7 +11,7 @@ export const CountryAPI = createApi({
           _limit:limit,
         },
       }),
-      providesTags: (result: any) => ["Countries"],
+      providesTags: () => ["Countries"],
     }),
   }),
 });

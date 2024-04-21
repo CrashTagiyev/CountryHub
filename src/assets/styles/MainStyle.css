@@ -1,0 +1,91 @@
+.countries-Nav {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 20px;
+    margin-top: 120px;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .country-Mini-Info-item {
+    padding: 15px 8px 21px 8px;
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    /* height: 400px; */
+    color: black;
+    text-decoration: none;
+    gap: 5px;
+    align-items: center;
+    border-radius: 30px;
+    box-shadow: 0em 0em 0.6em 0.1em slategray;
+  }
+  .country-Mini-Info-item img{
+    width: 335px;
+    height: 200px;
+  }
+  .mini-info-country-name {
+    font-family: Mukta;
+    font-size: larger;
+  }
+  
+  .country-info {
+    margin-top: 27px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .pupulation-Info {
+    width: 320px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .info-text {
+    font-family: Mukta;
+  }
+  
+  .currency-Info {
+    width: 320px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .population-img {
+    width: 20px;
+    height: 20px;
+    background-image: url("https://cdn.discordapp.com/attachments/1039503518404456458/1227571133876797523/image.png?ex=6628e3b5&is=66166eb5&hm=29f55d251dbb2cc6a3da33c0d5ed94562cac9d15c9b12910c5921f1fa8f5d606&");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  
+  .currency-img {
+    width: 30px;
+    height: 20px;
+    background-image: url("https://cdn.discordapp.com/attachments/1039503518404456458/1227586568521252887/image.png?ex=6628f215&is=66167d15&hm=52ec31debb162e4934b9ab3238a6670c8a01dbbb297942ec54f797e51e7d3423&");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+  
+  .show-more-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .show-more-button {
+    border: 1px solid deepskyblue !important;
+    color: deepskyblue !important;
+  }
+  
+  .show-more-button:hover {
+    color: white !important;
+    background: deepskyblue !important;
+  }
+  

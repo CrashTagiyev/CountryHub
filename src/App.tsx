@@ -1,51 +1,61 @@
-import { useState } from 'react'
-import './App.css'
-import { CountryAPI } from './Service/CountryService'
-import { ICountry } from './Models/CountryModel'
-import { isIndependent } from './assets/FilterMethods/isIndependentFilter'
-import { sortByValues } from './assets/FilterMethods/sortingFilter'
-import Main from './components/Main'
-import Header from './components/Header'
-import { filterByRegion } from './assets/FilterMethods/filterByRegion'
-import { searchFilter } from './assets/FilterMethods/searchByFilter'
+import { createContext, useEffect, useState } from 'react';
+import './App.css';
+import { CountryAPI } from './Service/CountryService';
+import { ICountry } from './Models/CountryModel';
+import { isIndependent } from './FilterMethods/isIndependentFilter';
+import { sortByValues } from './FilterMethods/sortingFilter';
+import Main from './components/Main/Main';
+import Header from './components/Header/Header';
+import { filterByRegion } from './FilterMethods/filterByRegion';
+import { searchFilter } from './FilterMethods/searchByFilter';
 
+export const AppContext = createContext<any>(null);
 
 const App: React.FC = () => {
 
-  //search and sort states
-  const [searchValue, setSearchValue] = useState<string>("")
-  const [searchByValue, setSearchByValue] = useState<string>("Name")
-  const [isIndependentState, setIsIndependentState] = useState<string>("All")
-  const [sortState, setSortState] = useState<string>("byPopulationDesc")
-  const [sortByRegion, setSortByRegionState] = useState<string[]>([])
-  console.log(searchByValue)
-  //rtk query data
+  const [searchValue, setSearchValue] = useState<string>(() => sessionStorage.getItem('searchValue') || '');
+  const [searchByValue, setSearchByValue] = useState<string>(() => sessionStorage.getItem('searchByOptions') || 'Name');
+  const [isIndependentState, setIsIndependentState] = useState<string>(() => sessionStorage.getItem('isIndependentOptions') || 'All');
+  const [sortByRegion, setSortByRegionState] = useState<string[]>(() => JSON.parse(sessionStorage.getItem('sortByRegionOptions') || '[]'));
+  const [sortState, setSortState] = useState<string>(() => sessionStorage.getItem('sortOptions') || 'byAlphaAsc');
+
+
+  useEffect(() => {
+    sessionStorage.setItem('searchValue', searchValue);
+    sessionStorage.setItem('searchByOptions', searchByValue);
+    sessionStorage.setItem('isIndependentOptions', isIndependentState);
+    sessionStorage.setItem('sortByRegionOptions', JSON.stringify(sortByRegion));
+    sessionStorage.setItem('sortOptions', sortState);
+  }, [searchValue, searchByValue, isIndependentState, sortByRegion, sortState]);
+
   const { data } = CountryAPI.useFetchAllCountriesQuery(undefined, {
     selectFromResult: ({ data }: any) => ({
-      //sortings
-      data: data ? data?.filter((country: ICountry) => isIndependent(isIndependentState, country))
-        .filter((country: ICountry) => (searchFilter(country, searchByValue, searchValue)))
-        .filter((country: ICountry) => {
-          if (sortByRegion.length > 0)
-            return filterByRegion(country, sortByRegion)
-          else {
-            return true;
-          }
-        })
+      data: data ? data
+        .filter((country: ICountry) => isIndependent(isIndependentState, country))
+        .filter((country: ICountry) => searchFilter(country, searchByValue, searchValue))
+        .filter((country: ICountry) => sortByRegion.length > 0 ? filterByRegion(country, sortByRegion) : true)
         .sort((country1: ICountry, country2: ICountry) => sortByValues(sortState, country1, country2))
         : []
     })
-  })
-
-  console.log(data)
-
+  });
 
   return (
-    <>
-      <Header setSearchBy={setSearchByValue} setSearch={setSearchValue} setSort={setSortState} setIndependent={setIsIndependentState} setSortByRegion={setSortByRegionState}></Header>
-      <Main countryArray={data}></Main>
-    </>
-  )
+    <AppContext.Provider value={{
+      searchValue,
+      setSearchValue,
+      searchByValue,
+      setSearchByValue,
+      isIndependentState,
+      setIsIndependentState,
+      sortState,
+      setSortState,
+      sortByRegion,
+      setSortByRegionState,
+    }}>
+      <Header />
+      <Main countryArray={data} />
+    </AppContext.Provider>
+  );
 }
 
-export default App
+export default App;

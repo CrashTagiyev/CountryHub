@@ -1,4 +1,4 @@
-import { ICountry } from "../../Models/CountryModel";
+import { ICountry } from "../Models/CountryModel";
 
 
 export const searchFilter = (country: ICountry, searchBy: string, arg: string) => {
