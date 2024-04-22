@@ -22,7 +22,7 @@ const Main = ({ countryArray }: { countryArray: ICountry[] }) => {
       <nav className='countries-Nav'>
         {(countryArray as ICountry[]).map((country: ICountry, index: number) => (
           index < maxContent ? (
-            <Link className='country-Mini-Info-item' key={index} to={`/countries/:${country.name.common}`} state={country}>
+            <Link to={`/countries/:${country.name.common}`} className='country-Mini-Info-item' key={index}  state={country}>
               <img className='country-mini-info-image' src={country.flags.png} alt={country.flag} />
               <div className='country-info'>
                 <h2 className='mini-info-country-name'>{country.name.common}</h2>

@@ -65,9 +65,10 @@
   }
   .flag-coatOfArms {
     display: flex;
+    width: 50%;
     gap: 50px;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-end;
   }
   
   .country-flag {
@@ -81,3 +82,4 @@
     height: 153px;
   }
   
+ 
